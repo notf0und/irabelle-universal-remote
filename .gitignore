@@ -1,0 +1,13 @@
+.DS_Store
+**/.DS_Store
+__pycache__/
+**/__pycache__/
+*.py[cod]
+# Generated code-library index (build artefact, regenerate with tools/build_codes_index.py)
+dist/
+codes-repo/
+upstream-codes/
+codes/
+apk/
+tools/
+tests/

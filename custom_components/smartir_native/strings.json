@@ -1,0 +1,259 @@
+{
+  "title": "Irabelle Universal Remote",
+  "config": {
+    "flow_title": "Add a SmartIR device",
+    "step": {
+      "user": {
+        "title": "Add a device",
+        "description": "Convert a SmartIR JSON code file, or paste a profile code that was already generated.",
+        "menu_options": {
+          "smartir_json": "SmartIR JSON file (converter built in)",
+          "profile_code": "IRP1 profile code",
+          "code_library": "Browse the code library"
+        }
+      },
+      "device": {
+        "title": "Set up the entity",
+        "description": "Choose the Infrared emitter that controls this device. You can also choose an optional receiver to synchronize state when the physical remote is used.",
+        "data": {
+          "name": "Name",
+          "infrared_entity_id": "Infrared emitter",
+          "infrared_receiver_entity_id": "Infrared receiver (optional)",
+          "carrier_frequency": "IR carrier frequency",
+          "timing_scale": "IR timing scale",
+          "temperature_sensor": "Temperature sensor (optional)",
+          "humidity_sensor": "Humidity sensor (optional)",
+          "power_sensor": "Power sensor (optional)",
+          "power_sensor_restore_state": "Restore state on restart"
+        },
+        "data_description": {
+          "carrier_frequency": "The modulation frequency sent to the IR emitter. Leave it at 38 kHz unless the device requires a different carrier frequency.",
+          "timing_scale": "Scales every pulse and gap sent by this entity. Leave it at 100% unless a transmitter needs timing compensation.",
+          "temperature_sensor": "Room temperature shown on the climate card.",
+          "humidity_sensor": "Room humidity shown on the climate card.",
+          "power_sensor": "A binary sensor that reports whether the appliance is really on.",
+          "power_sensor_restore_state": "Re-apply the last state when Home Assistant restarts."
+        }
+      },
+      "reconfigure": {
+        "title": "Update Irabelle Universal Remote device",
+        "description": "View or replace the IRP1 profile code, and change the name, emitter, or optional receiver. The replacement profile must use the same device type.",
+        "data": {
+          "name": "Name",
+          "infrared_entity_id": "Infrared emitter",
+          "infrared_receiver_entity_id": "Infrared receiver (optional)",
+          "carrier_frequency": "IR carrier frequency",
+          "timing_scale": "IR timing scale",
+          "profile_code": "IRP1 profile code",
+          "temperature_sensor": "Temperature sensor (optional)",
+          "humidity_sensor": "Humidity sensor (optional)",
+          "power_sensor": "Power sensor (optional)",
+          "power_sensor_restore_state": "Restore state on restart"
+        },
+        "data_description": {
+          "profile_code": "Paste a complete IRP1 code for the same type of device.",
+          "carrier_frequency": "The modulation frequency sent to the IR emitter. Leave it at 38 kHz unless the device requires a different carrier frequency.",
+          "timing_scale": "Scales every pulse and gap sent by this entity. Leave it at 100% unless a transmitter needs timing compensation.",
+          "temperature_sensor": "Room temperature shown on the climate card.",
+          "humidity_sensor": "Room humidity shown on the climate card.",
+          "power_sensor": "A binary sensor that reports whether the appliance is really on.",
+          "power_sensor_restore_state": "Re-apply the last state when Home Assistant restarts."
+        }
+      },
+      "profile_code": {
+        "title": "Paste the profile code",
+        "description": "Create and copy a profile code from the SmartIR converter website, then paste it below.",
+        "data": {
+          "profile_code": "Profile code"
+        },
+        "data_description": {
+          "profile_code": "A code beginning with IRP1: generated locally by the converter website."
+        }
+      },
+      "smartir_json": {
+        "title": "SmartIR JSON device file",
+        "description": "Upload the SmartIR JSON file for your device, or paste its contents. The converter website is not needed: the file is converted here, with the correct entity type detected automatically.",
+        "data": {
+          "smartir_json_file": "SmartIR JSON file",
+          "smartir_json_text": "or paste the SmartIR JSON"
+        },
+        "data_description": {
+          "smartir_json_file": "A code file such as climate/1280.json from a SmartIR code repository.",
+          "smartir_json_text": "Used when no file is uploaded. The whole JSON file must be pasted."
+        }
+      },
+      "code_library": {
+        "title": "Code library",
+        "description": "Search the published code library by brand and model, like the phone app. Point it at the library repository (or a local copy of it) — pinyin works too, so \"fushitong\" finds Fujitsu. The index is downloaded once and cached; only the chosen device's bundle is fetched.",
+        "data": {
+          "library_url": "Library URL or folder",
+          "library_brand": "Brand",
+          "library_model": "Model (optional)",
+          "library_appliance": "Device type"
+        },
+        "data_description": {
+          "library_url": "An https:// URL, or a folder such as /config/smartir_codes holding index.json.gz and bundles/.",
+          "library_brand": "Leave empty to list everything indexed. A model typed here still matches.",
+          "library_model": "Narrows the results, for example the model on your remote's label.",
+          "library_appliance": "The kind of device: air conditioner, TV, set-top box, and so on."
+        }
+      },
+      "code_library_select": {
+        "title": "Choose the device",
+        "description": "{result_count} Pick the entry that matches your device. Air conditioners appear as climate entities; a full code set lists its modes and range, while a button remote steps one degree at a time.",
+        "data": {
+          "library_choice": "Device"
+        },
+        "data_description": {
+          "library_choice": "The chosen device is fetched and converted into a profile."
+        }
+      },
+      "test": {
+        "title": "Test the device",
+        "description": "{position} Testing {device} through {emitter}. {capabilities} {sent} {error} Press a button and watch the appliance - every mode, fan speed and swing state the code set has is offered.",
+        "menu_options": {
+          "test_power_on": "Power on",
+          "test_power_off": "Power off",
+          "test_warmer": "Warmer",
+          "test_cooler": "Cooler",
+          "test_mode": "Send a mode...",
+          "test_temperature": "Send a temperature",
+          "test_confirm": "It worked - create the entity",
+          "test_next": "Next code set",
+          "test_previous": "Previous code set",
+          "test_save_anyway": "Don't test - save it anyway",
+          "test_fan": "Send a fan speed...",
+          "test_swing": "Send a swing state...",
+          "test_create_provisional": "Create it and test with the real card"
+        }
+      },
+      "code_library_emitter": {
+        "title": "Infrared emitter",
+        "description": "Choose the emitter that will transmit. Every code test and the finished device use it, so pick the one that can reach the appliance.",
+        "data": {
+          "infrared_entity_id": "Emitter",
+          "infrared_receiver_entity_id": "Receiver (optional)",
+          "temperature_sensor": "Temperature sensor (optional)",
+          "humidity_sensor": "Humidity sensor (optional)",
+          "power_sensor": "Power sensor (optional)",
+          "power_sensor_restore_state": "Restore state on restart"
+        },
+        "data_description": {
+          "infrared_entity_id": "The infrared emitter entity that sends the codes.",
+          "infrared_receiver_entity_id": "Optional: learn from the physical remote and keep the state in sync.",
+          "temperature_sensor": "Room temperature shown on the climate card.",
+          "humidity_sensor": "Room humidity shown on the climate card.",
+          "power_sensor": "A binary sensor that reports whether the appliance is really on.",
+          "power_sensor_restore_state": "Re-apply the last state when Home Assistant restarts."
+        }
+      },
+      "test_mode": {
+        "title": "Send a mode",
+        "description": "Modes in this code set: {modes}. Pick one and watch the appliance.",
+        "data": {
+          "test_mode": "Mode"
+        }
+      },
+      "test_fan": {
+        "title": "Send a fan speed",
+        "description": "Fan speeds in this code set: {fans}. Pick one and watch the appliance.",
+        "data": {
+          "test_fan": "Fan speed"
+        }
+      },
+      "test_swing": {
+        "title": "Send a swing state",
+        "description": "Swing states in this code set: {swings}. Pick one and watch the appliance.",
+        "data": {
+          "test_swing": "Swing"
+        }
+      },
+      "init": {
+        "title": "Edit Irabelle Universal Remote device",
+        "description": "Change the emitter, the carrier frequency or timing scale, and the optional room and power sensors. The name and the profile code are edited from Reconfigure.",
+        "data": {
+          "infrared_entity_id": "Infrared emitter",
+          "infrared_receiver_entity_id": "Infrared receiver (optional)",
+          "carrier_frequency": "IR carrier frequency",
+          "timing_scale": "IR timing scale",
+          "temperature_sensor": "Temperature sensor (optional)",
+          "humidity_sensor": "Humidity sensor (optional)",
+          "power_sensor": "Power sensor (optional)",
+          "power_sensor_restore_state": "Restore state on restart",
+          "profile_code": "IRP1 profile code"
+        },
+        "data_description": {
+          "carrier_frequency": "The modulation frequency sent to the IR emitter. Leave it at 38 kHz unless the device requires a different carrier frequency.",
+          "timing_scale": "Scales every pulse and gap sent by this entity. Leave it at 100% unless a transmitter needs timing compensation.",
+          "temperature_sensor": "Room temperature shown on the climate card.",
+          "humidity_sensor": "Room humidity shown on the climate card.",
+          "power_sensor": "A binary sensor that reports whether the appliance is really on.",
+          "power_sensor_restore_state": "Re-apply the last state when Home Assistant restarts."
+        }
+      }
+    },
+    "error": {
+      "invalid_profile": "The profile code is invalid or unsupported. Generate it again and paste the complete code.",
+      "profile_type_mismatch": "The replacement profile is for a different device type. Add it as a new Irabelle Universal Remote device instead.",
+      "invalid_smartir_json": "That SmartIR file could not be used: {error}",
+      "library_unavailable": "The code library could not be read: {error}",
+      "library_no_match": "No library device matched: {error}",
+      "library_device_invalid": "That library device could not be converted: {error}",
+      "test_failed": "The test command could not be sent: {error}",
+      "no_test_command": "This profile has no power command to test with.",
+      "no_more_candidates": "That was the last code set for this search - widen the brand or model to see more."
+    },
+    "abort": {
+      "no_infrared_emitters": "No Home Assistant Infrared emitter entity is available.",
+      "invalid_profile": "The profile setup session expired. Start adding the integration again.",
+      "reconfigure_successful": "The Irabelle Universal Remote device was updated successfully.",
+      "library_expired": "The library search expired. Start adding the integration again."
+    },
+    "create_entry": {
+      "smartir_native_off_filled": "The file did not contain an off command, so {frame} was added. If the device does not turn off, learn the off command from the remote and replace the profile."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Edit Irabelle Universal Remote device",
+        "description": "View or replace the IRP1 profile code and change the emitter or optional receiver. The replacement profile must use the same device type.",
+        "data": {
+          "infrared_entity_id": "Infrared emitter",
+          "infrared_receiver_entity_id": "Infrared receiver (optional)",
+          "carrier_frequency": "IR carrier frequency",
+          "timing_scale": "IR timing scale",
+          "profile_code": "IRP1 profile code"
+        },
+        "data_description": {
+          "profile_code": "Paste a complete IRP1 code for the same type of device.",
+          "carrier_frequency": "The modulation frequency sent to the IR emitter. Leave it at 38 kHz unless the device requires a different carrier frequency.",
+          "timing_scale": "Scales every pulse and gap sent by this entity. Leave it at 100% unless a transmitter needs timing compensation."
+        }
+      }
+    },
+    "error": {
+      "invalid_profile": "The profile code is invalid or unsupported. Generate it again and paste the complete code.",
+      "profile_type_mismatch": "The replacement profile is for a different device type. Add it as a new Irabelle Universal Remote device instead."
+    }
+  },
+  "selector": {
+    "library_device_type": {
+      "options": {
+        "any": "Any",
+        "climate": "Climate",
+        "fan": "Fan",
+        "light": "Light",
+        "media_player": "Media player"
+      }
+    },
+    "test_action": {
+      "options": {
+        "send": "Send the test command",
+        "confirm": "Yes, it responded — create the entity",
+        "next": "No — try the next match",
+        "save_anyway": "Don't test — save it anyway"
+      }
+    }
+  }
+}
