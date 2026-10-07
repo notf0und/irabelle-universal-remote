@@ -492,7 +492,7 @@
             <textarea id="integrationOutput" spellcheck="false" readonly></textarea>
             <div class="note">The Add to Home Assistant button also copies the profile code when clipboard access is available. Paste it in the setup flow and choose your Infrared emitter.</div>
             <div class="actions">
-              <a id="addToHaLink" class="download" href="https://my.home-assistant.io/redirect/config_flow_start/?domain=smartir_native" target="_blank" rel="noreferrer">Add to Home Assistant</a>
+              <a id="addToHaLink" class="download" href="https://my.home-assistant.io/redirect/config_flow_start/?domain=irabelle_universal_remote" target="_blank" rel="noreferrer">Add to Home Assistant</a>
             </div>
           </div>
         </div>
@@ -539,7 +539,7 @@
     <a href="https://github.com/smartHomeHub/SmartIR/tree/e4df2957ad915536f41ffb39daa96886d7cfe040/codes" target="_blank" rel="noreferrer">Broadlink code repository</a>
     <a href="https://developers.home-assistant.io/docs/core/entity/infrared/" target="_blank" rel="noreferrer">HA infrared docs</a>
     <a href="https://github.com/tomer2526/IR-Wrapper-for-Zigbee-IR-Bluster/tree/main/custom_components/z2m_ir_bridge" target="_blank" rel="noreferrer">Z2M IR bridge</a>
-    <a href="https://github.com/tomer2526/Convert-Broadlink-Codes-to-Row-MQTT-Format/tree/main/custom_components/smartir_native" target="_blank" rel="noreferrer">Irabelle Universal Remote integration</a>
+    <a href="https://github.com/tomer2526/Convert-Broadlink-Codes-to-Row-MQTT-Format/tree/main/custom_components/irabelle_universal_remote" target="_blank" rel="noreferrer">Irabelle Universal Remote integration</a>
   </footer>
 
   <script>
@@ -1324,7 +1324,7 @@
         .replace(/^_+|_+$/g, "")
         .slice(0, 36) || "device";
       return {
-        domain: `smartir_native_${slug}`,
+        domain: `irabelle_universal_remote_${slug}`,
         name: `${label} Native IR`,
       };
     }

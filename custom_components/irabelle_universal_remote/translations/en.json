@@ -210,7 +210,7 @@
       "library_expired": "The library search expired. Start adding the integration again."
     },
     "create_entry": {
-      "smartir_native_off_filled": "The file did not contain an off command, so {frame} was added. If the device does not turn off, learn the off command from the remote and replace the profile."
+      "irabelle_universal_remote_off_filled": "The file did not contain an off command, so {frame} was added. If the device does not turn off, learn the off command from the remote and replace the profile."
     }
   },
   "options": {

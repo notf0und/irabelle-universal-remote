@@ -1,6 +1,6 @@
 """Constants for Irabelle Universal Remote."""
 
-DOMAIN = "smartir_native"
+DOMAIN = "irabelle_universal_remote"
 NAME = "Irabelle Universal Remote"
 
 CONF_INFRARED_ENTITY_ID = "infrared_entity_id"

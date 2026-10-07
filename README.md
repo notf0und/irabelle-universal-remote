@@ -35,7 +35,7 @@ The non-climate platforms follow the official SmartIR JSON layouts:
 
 Irabelle Universal Remote requires Home Assistant 2026.6 or newer.
 
-- [Irabelle Universal Remote integration source](https://github.com/notf0und/irabelle-universal-remote/tree/main/custom_components/smartir_native)
+- [Irabelle Universal Remote integration source](https://github.com/notf0und/irabelle-universal-remote/tree/main/custom_components/irabelle_universal_remote)
 
 1. Click the **Open in HACS** button above — it opens HACS on this repository and adds it as a custom *Integration* repository. By hand: HACS → ⋮ → *Custom repositories* → `notf0und/irabelle-universal-remote`, category **Integration**.
 2. Download Irabelle Universal Remote in HACS and restart Home Assistant.

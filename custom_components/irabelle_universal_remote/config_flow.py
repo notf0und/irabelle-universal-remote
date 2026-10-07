@@ -818,7 +818,7 @@ class SmartIrNativeConfigFlow(ConfigFlow, domain=DOMAIN):
             title=title,
             data=data,
             description=(
-                "smartir_native_off_filled" if self._filled_off_label else None
+                "irabelle_universal_remote_off_filled" if self._filled_off_label else None
             ),
             description_placeholders=(
                 {"frame": self._filled_off_label}

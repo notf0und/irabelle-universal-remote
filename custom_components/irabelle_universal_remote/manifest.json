@@ -1,0 +1,15 @@
+{
+  "domain": "irabelle_universal_remote",
+  "name": "Irabelle Universal Remote",
+  "version": "2.7.0",
+  "config_flow": true,
+  "documentation": "https://github.com/notf0und/irabelle-universal-remote",
+  "issue_tracker": "https://github.com/notf0und/irabelle-universal-remote/issues",
+  "dependencies": [
+    "infrared"
+  ],
+  "codeowners": [
+    "@tomer2526"
+  ],
+  "iot_class": "local_push"
+}
