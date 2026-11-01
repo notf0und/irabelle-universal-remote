@@ -1,7 +1,7 @@
 {
   "domain": "irabelle_universal_remote",
   "name": "Irabelle Universal Remote",
-  "version": "2.7.0",
+  "version": "2.7.1",
   "config_flow": true,
   "documentation": "https://github.com/notf0und/irabelle-universal-remote",
   "issue_tracker": "https://github.com/notf0und/irabelle-universal-remote/issues",
