@@ -34,7 +34,7 @@ The non-climate platforms follow the official SmartIR JSON layouts:
 
 ## Irabelle Universal Remote installation
 
-Irabelle Universal Remote requires Home Assistant 2026.6 or newer.
+Irabelle Universal Remote requires Home Assistant 2026.11 or newer.
 
 - [Irabelle Universal Remote integration source](https://github.com/notf0und/irabelle-universal-remote/tree/main/custom_components/irabelle_universal_remote)
 

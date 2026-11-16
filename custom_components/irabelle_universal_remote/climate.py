@@ -61,7 +61,7 @@ async def async_setup_entry(
 class SmartIrNativeClimate(SmartIrNativeEmitterEntity, ClimateEntity, RestoreEntity):
     """A native Infrared climate entity driven by SmartIR command data."""
 
-    _attr_temperature_unit = UnitOfTemperature.CELSIUS
+    _attr_native_temperature_unit = UnitOfTemperature.CELSIUS
 
     def __init__(self, entry: ConfigEntry, data: dict[str, Any]) -> None:
         """Initialize the entity from validated profile data."""
@@ -114,8 +114,8 @@ class SmartIrNativeClimate(SmartIrNativeEmitterEntity, ClimateEntity, RestoreEnt
         self._attr_min_temp = data["minTemperature"]
         self._attr_max_temp = data["maxTemperature"]
         self._attr_target_temperature_step = data.get("precision", 1)
-        self._attr_target_temperature = self._attr_min_temp
-        self._attr_current_temperature = self._read_temperature_sensor()
+        self._attr_native_target_temperature = self._attr_min_temp
+        self._attr_native_current_temperature = self._read_temperature_sensor()
         self._attr_current_humidity = self._read_humidity_sensor()
         self._attr_hvac_modes = [HVACMode.OFF] + [
             HVACMode(mode) for mode in data["operationModes"]
@@ -141,7 +141,7 @@ class SmartIrNativeClimate(SmartIrNativeEmitterEntity, ClimateEntity, RestoreEnt
         self._stepped: dict[str, Any] | None = data.get("stepped")
         self._step_modes: list[HVACMode] = []
         self._step_family: int | None = None
-        self._assumed_temperature = float(self._attr_target_temperature)
+        self._assumed_temperature = float(self._attr_native_target_temperature)
         if self._stepped:
             names = entry.data.get("mode_names") or data.get("modeNames") or data["operationModes"]
             self._step_modes = [HVACMode(name) for name in names[: len(self._stepped["modes"])]]
@@ -161,7 +161,7 @@ class SmartIrNativeClimate(SmartIrNativeEmitterEntity, ClimateEntity, RestoreEnt
             self._assumed_temperature = float(
                 round((self._attr_min_temp + self._attr_max_temp) / 2)
             )
-            self._attr_target_temperature = self._assumed_temperature
+            self._attr_native_target_temperature = self._assumed_temperature
 
     def _read_temperature_sensor(self) -> float | None:
         """Current room temperature from the configured sensor."""
@@ -213,7 +213,7 @@ class SmartIrNativeClimate(SmartIrNativeEmitterEntity, ClimateEntity, RestoreEnt
     @callback
     def _sensor_state_changed(self, event: Event[EventStateChangedData]) -> None:
         """Follow the room sensors so the card stays accurate."""
-        self._attr_current_temperature = self._read_temperature_sensor()
+        self._attr_native_current_temperature = self._read_temperature_sensor()
         self._attr_current_humidity = self._read_humidity_sensor()
         self.async_write_ha_state()
 
@@ -233,7 +233,7 @@ class SmartIrNativeClimate(SmartIrNativeEmitterEntity, ClimateEntity, RestoreEnt
             )
             # The entity is only attached to hass now, so this is the first
             # moment the room sensors can actually be read.
-            self._attr_current_temperature = self._read_temperature_sensor()
+            self._attr_native_current_temperature = self._read_temperature_sensor()
             self._attr_current_humidity = self._read_humidity_sensor()
             self.async_write_ha_state()
         if self._power_sensor:
@@ -271,7 +271,7 @@ class SmartIrNativeClimate(SmartIrNativeEmitterEntity, ClimateEntity, RestoreEnt
         except ValueError:
             self._attr_hvac_mode = HVACMode.OFF
         if (temperature := state.attributes.get("temperature")) is not None:
-            self._attr_target_temperature = temperature
+            self._attr_native_target_temperature = temperature
         if (fan_mode := state.attributes.get("fan_mode")) in self._attr_fan_modes:
             self._attr_fan_mode = fan_mode
         if self._attr_swing_modes:
@@ -337,7 +337,7 @@ class SmartIrNativeClimate(SmartIrNativeEmitterEntity, ClimateEntity, RestoreEnt
             current_hvac_mode=self._attr_hvac_mode.value,
             current_fan_mode=self._attr_fan_mode,
             current_swing_mode=self._attr_swing_mode,
-            current_temperature=self._attr_target_temperature,
+            current_temperature=self._attr_native_target_temperature,
         )
         if matched is None:
             _LOGGER.debug("Received IR signal did not match this SmartIR profile")
@@ -361,7 +361,7 @@ class SmartIrNativeClimate(SmartIrNativeEmitterEntity, ClimateEntity, RestoreEnt
             if matched.swing_mode is not None:
                 self._attr_swing_mode = matched.swing_mode
             if matched.temperature is not None:
-                self._attr_target_temperature = matched.temperature
+                self._attr_native_target_temperature = matched.temperature
         self.async_write_ha_state()
 
     async def async_set_temperature(self, **kwargs: Any) -> None:
@@ -374,7 +374,7 @@ class SmartIrNativeClimate(SmartIrNativeEmitterEntity, ClimateEntity, RestoreEnt
         if (temperature := kwargs.get(ATTR_TEMPERATURE)) is not None:
             temperature = min(self.max_temp, max(self.min_temp, temperature))
             step = self.target_temperature_step or 1
-            self._attr_target_temperature = round(temperature / step) * step
+            self._attr_native_target_temperature = round(temperature / step) * step
 
         requested_mode = kwargs.get("hvac_mode")
         if requested_mode is not None:
@@ -446,7 +446,7 @@ class SmartIrNativeClimate(SmartIrNativeEmitterEntity, ClimateEntity, RestoreEnt
             # The mode button carries the state it was captured in; the unit
             # adopts that state, so our assumption has to follow it.
             self._assumed_temperature = float(mark)
-            self._attr_target_temperature = self._assumed_temperature
+            self._attr_native_target_temperature = self._assumed_temperature
             _LOGGER.debug("Mode %s resets assumed temperature to %s", mode, mark)
         self._attr_hvac_mode = mode
         self._last_on_mode = mode
@@ -462,7 +462,7 @@ class SmartIrNativeClimate(SmartIrNativeEmitterEntity, ClimateEntity, RestoreEnt
             min(self._attr_max_temp, max(self._attr_min_temp, requested))
         )
         if self._attr_hvac_mode == HVACMode.OFF:
-            self._attr_target_temperature = target
+            self._attr_native_target_temperature = target
             self._assumed_temperature = target
             return
         guard = 0
@@ -480,7 +480,7 @@ class SmartIrNativeClimate(SmartIrNativeEmitterEntity, ClimateEntity, RestoreEnt
                 break
             await self._send_value(code)
             self._assumed_temperature += 1 if rising else -1
-            self._attr_target_temperature = self._assumed_temperature
+            self._attr_native_target_temperature = self._assumed_temperature
             await asyncio.sleep(0.4)
 
     def _find_step_code(self, rising: bool, temperature: float) -> list[int] | None:
@@ -509,5 +509,5 @@ class SmartIrNativeClimate(SmartIrNativeEmitterEntity, ClimateEntity, RestoreEnt
             command = self._commands[self._attr_hvac_mode.value][self._attr_fan_mode]
             if self._attr_swing_modes:
                 command = command[self._attr_swing_mode]
-            temperature = f"{self._attr_target_temperature:g}"
+            temperature = f"{self._attr_native_target_temperature:g}"
             await self._send_value(command[temperature])
